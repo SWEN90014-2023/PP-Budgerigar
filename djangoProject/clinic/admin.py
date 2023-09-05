@@ -26,7 +26,7 @@ class ClinicianInfoAdmin(admin.ModelAdmin):
 @admin.register(PatientInfo)
 class PatientInfoAdmin(admin.ModelAdmin):
     # pass
-    list_display = ['pa_id','pa_name','age', 'sex', 'create_time', 'info', 'return_href']
+    list_display = ['pa_id','cli_id','pa_name','age', 'sex', 'create_time', 'info', 'return_href']
 
     readonly_fields = ['create_time']
 

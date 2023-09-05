@@ -11,6 +11,7 @@ class ClinicianInfo(models.Model):
 
 class PatientInfo(models.Model):
     pa_id = models.CharField(primary_key=True, max_length=6)
+    cli_id = models.CharField(max_length=6,default=00)
     pa_name = models.CharField(max_length=32)
     pa_psw = models.CharField(max_length=32)
     age = models.SmallIntegerField(default=0)
