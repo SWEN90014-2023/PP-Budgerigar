@@ -19,3 +19,4 @@ def Login_view(request):
             return HttpResponse("Username or password is not correct")
     else:
         return HttpResponse("Please input username and password")
+
