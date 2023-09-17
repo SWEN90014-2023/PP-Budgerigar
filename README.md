@@ -1,6 +1,8 @@
 # PP-Budgerigar
 
-# 这个是文件目录的格式，后面再改
+# directory of the project
+template file needs to unzip in env/lib
+
 < PROJECT ROOT >
    |
    |-- core/                               # Implements app configuration
