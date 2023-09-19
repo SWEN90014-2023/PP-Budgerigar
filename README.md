@@ -1,5 +1,6 @@
 # PP-Budgerigar
 
+
 < PROJECT ROOT >
    |
    |-- core/                               # Implements app configuration
