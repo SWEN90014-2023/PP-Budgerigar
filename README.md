@@ -1,6 +1,5 @@
 # PP-Budgerigar
 
-# 这个是文件目录的格式，后面再改
 < PROJECT ROOT >
    |
    |-- core/                               # Implements app configuration
