@@ -6,16 +6,8 @@ This project aims to assist clinicians in analyzing their patients more effectiv
 
 <details>
 <summary>Click to expand directory</summary>
-
 - [Project Structure](#project-structure)
-- [Core Features](#core-features)
-- [Applications](#applications)
-- [Static Files](#static-files)
-- [Templates](#templates)
-- [Requirements](#requirements)
 - [Environment Variables](#environment-variables)
-- [Management](#management)
-
 </details>
 
 ## Project Structure
