@@ -1,8 +1,28 @@
 # PP-Budgerigar
 
-# directory of the project
-template file needs to unzip in env/lib
+This project aims to assist clinicians in analyzing their patients more effectively by gathering information from their daily activities. Currently, the project has a data collection interface called AWARE that can gather the daily information of every patient who uses it. To help clinicians analyze their patients more objectively, a visualization system is needed to process and display the data collected. This will be a valuable tool for clinicians, who will no longer have to rely solely on patient reports to make informed decisions.
 
+**Project Directory**
+
+<details>
+<summary>Click to expand directory</summary>
+
+- [Project Structure](#project-structure)
+- [Core Features](#core-features)
+- [Applications](#applications)
+- [Static Files](#static-files)
+- [Templates](#templates)
+- [Requirements](#requirements)
+- [Environment Variables](#environment-variables)
+- [Management](#management)
+
+</details>
+
+## Project Structure
+
+The project's directory structure is as follows:
+
+```plaintext
 < PROJECT ROOT >
    |
    |-- core/                               # Implements app configuration
@@ -12,7 +32,7 @@ template file needs to unzip in env/lib
    |
    |-- apps/
    |    |
-   |    |-- home/                          # A simple app that serve HTML files
+   |    |-- home/                          # A simple app that serves HTML files
    |    |    |-- views.py                  # Serve HTML pages for authenticated users
    |    |    |-- urls.py                   # Define some super simple routes  
    |    |
@@ -22,7 +42,7 @@ template file needs to unzip in env/lib
    |    |    |-- forms.py                  # Define auth forms (login and register) 
    |    |
    |    |-- static/
-   |    |    |-- <css, JS, images>         # CSS files, Javascripts files
+   |    |    |-- <css, JS, images>         # CSS files, Javascript files
    |    |
    |    |-- templates/                     # Templates used to render pages
    |         |-- includes/                 # HTML chunks and components
@@ -50,6 +70,4 @@ template file needs to unzip in env/lib
    |-- manage.py                            # Start the app - Django default start script
    |
    |-- ************************************************************************
-```
 
-<br />
