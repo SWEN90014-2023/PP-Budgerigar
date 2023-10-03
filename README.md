@@ -6,8 +6,10 @@ This project aims to assist clinicians in analyzing their patients more effectiv
 
 <details>
 <summary>Click to expand directory</summary>
+   
 - [Project Structure](#project-structure)
 - [Environment Variables](#environment-variables)
+
 </details>
 
 ## Project Structure
