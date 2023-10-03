@@ -9,7 +9,6 @@ This project aims to assist clinicians in analyzing their patients more effectiv
    
 - [Project Structure](#project-structure)
 
-
 </details>
 
 ## Project Structure
