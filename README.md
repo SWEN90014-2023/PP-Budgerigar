@@ -70,4 +70,3 @@ The project's directory structure is as follows:
    |-- manage.py                            # Start the app - Django default start script
    |
    |-- ************************************************************************
-
