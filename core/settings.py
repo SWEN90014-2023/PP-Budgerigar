@@ -99,11 +99,11 @@ if DB_ENGINE and DB_NAME and DB_USERNAME:
     DATABASES = { 
       'default': {
         'ENGINE'  : 'django.db.backends.' + DB_ENGINE, 
-        "NAME": "MYDB",
-        "USER": "root",
-        "PASSWORD": "1234",
-        "HOST": "127.0.0.1",
-        "PORT": "3306",
+        "NAME": DB_NAME,
+        "USER": DB_USERNAME,
+        "PASSWORD": DB_PASS,
+        "HOST": DB_HOST,
+        "PORT": DB_PORT,
         }, 
     }
 else:
