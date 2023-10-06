@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "clinic",
     "home",
 ]
 
@@ -59,6 +58,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
 ]
 
 ROOT_URLCONF = "core.urls"
@@ -67,7 +67,7 @@ HOME_TEMPLATES = os.path.join(BASE_DIR, 'home', 'templates')
 
 TEMPLATES = [
     {
-        # 后端
+        # backend
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [HOME_TEMPLATES],
         "APP_DIRS": True,
