@@ -1,10 +1,10 @@
 from django.shortcuts import redirect
 from django.urls import path
-
 from . import views
 
 urlpatterns = [
     path('', lambda request: redirect('/login', permanent=False)),
     path('login', views.UserLoginView.as_view(), name='login_view'),
     path('home', views.homePage, name='home_page'),
+    path('chart/', views.chart_view, name='chart_view'),  # Add this line to the existing urlpatterns list
 ]
