@@ -1,0 +1,45 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container mt-5 text-center">
+    <h1 class="display-4">Digital Phenotyping Platform</h1>
+    <p class="lead">Harnessing the power of the digital footprint to gain insights into mental health.</p>
+
+    <img src="{% static 'assets/img/hero-banner.png' %}" alt="Digital Phenotyping Illustration" class="img-fluid rounded mb-4"  style="width: 600px; height: 200px; object-fit: cover;">
+
+    <hr class="my-4">
+
+    <h2>Key Features</h2>
+
+    <div class="row mt-5">
+        <div class="col-md-6">
+          <img src="{% static 'assets/img/social-media.png' %}" alt="Social Media Integration" class="img-fluid rounded-circle mb-3" style="width: 250px; height: 250px; object-fit: cover;">
+            <h3>Social Media Feeds</h3>
+            <p>Integration with popular platforms such as Facebook and Twitter, providing a comprehensive view into a user's online presence and behavior.</p>
+        </div>
+
+        <div class="col-md-6">
+            <img src="{% static 'assets/img/smartphone-data.png' %}" alt="Smartphone Sensing" class="img-fluid rounded-circle mb-3"  style="width: 250px; height: 250px; object-fit: cover;">
+            <h3>Smartphone Sensing Data</h3>
+            <p>Collecting diverse data, from GPS/geolocation to screen touch patterns, to decode day-to-day behavior patterns.</p>
+        </div>
+    </div>
+
+    <hr class="my-4">
+
+    <h2>Our Vision</h2>
+    <p class="lead">
+        Pioneering research at the intersection of technology and mental health. Our platform, developed in collaboration with The University of Melbourne, seeks to revolutionize the field of psychology and psychiatric treatment.
+    </p>
+
+    <hr class="my-4">
+
+    <div class="text-center mb-5">
+        <h2>Ready to Dive Deeper?</h2>
+        <p class="lead">Join our journey to redefine mental health research in the digital age.</p>
+    </div>
+</div>
+
+{% endblock content %}

@@ -1,4 +1,9 @@
 /* SELECTOR (FILTER INTERFACE) */
+.custom-image {
+    width: 250px;  /* Or any desired width */
+    height: 250px; /* Or any desired height */
+    object-fit: cover; /* This will ensure the image covers the entire dimensions without distorting */
+}
 
 .selector {
     width: 800px;

@@ -5,6 +5,7 @@ from . import views
 urlpatterns = [
     path('', lambda request: redirect('/login', permanent=False)),
     path('login', views.UserLoginView.as_view(), name='login_view'),
+    path('logout', views.logout_view, name="logout2"),
     path('home', views.homePage, name='home_page'),
     path('chart/', views.chart_view, name='chart_view'),  # Add this line to the existing urlpatterns list
 ]
