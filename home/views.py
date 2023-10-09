@@ -102,6 +102,14 @@ def delete_patient(request, pa_id):
         return JsonResponse({"success": False, "message": "Patient not found."}, status=404)
     except Exception as e:
         return JsonResponse({"success": False, "message": f"Error: {str(e)}"}, status=500)
+   
+def get_patient_by_name(request, clinician_id, name):
+    # get patients
+    matching_patients = PatientInfo.objects.filter(pa_name__icontains=name, cli_id=clinician_id)
+    
+    patients_list = list(matching_patients.values())
+
+    return JsonResponse(patients_list, safe=False)
 
 def chart_view(request):
     form = DateForm(request.GET or None)

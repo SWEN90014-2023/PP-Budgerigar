@@ -130,119 +130,116 @@
     loadPage(1)
 
     function renderSearch(searchname) { 
-    if (searchname === 'all') {
-        loadPage(1);
-    } else {
-        // Use the correct URL for getting patients
-        fetch('home/get_all_patients?page=' + currentPage, {
-            method: "get",
-        })
-        .then(response => response.json())
-        .then(data => {
-            total_pages = data.total_pages;  // Assuming your backend sends the total_pages
-            const tableBody = document.querySelector("#table-test tbody");
-            tableBody.innerHTML = "";  // Clear existing table data
+        console.log("renderSearch called with:", searchname);
+        if (searchname === 'all') {
+            loadPage(1);s
+        } else {
+            // Use the correct URL for getting patients
+            fetch('get_patient_by_name/' + clinician_id + '/' + searchname, {
+                method: 'GET'
+            })  
+                .then(response => response.json())
+                .then(data => {
+                    total_pages = 1
+                    const tableBody = document.querySelector("#table-test tbody");
+                    tableBody.innerHTML = ""; // Clear existing table data
 
-            data.patient_list.forEach((patient) => {
-                const tableRow = tableBody.insertRow();
+                    data.forEach((patient) => {
+                        const tableRow = tableBody.insertRow();
 
-                const cell1 = tableRow.insertCell(0);
-                cell1.textContent = patient.pa_id;
+                        const cell1 = tableRow.insertCell(0);
+                        cell1.textContent = patient.pa_id;
 
-                const cell2 = tableRow.insertCell(1);
-                cell2.textContent = patient.pa_name;
+                        const cell2 = tableRow.insertCell(1);
+                        cell2.textContent = patient.pa_name;
 
-                const cell3 = tableRow.insertCell(2);
-                cell3.textContent = patient.age;
+                        const cell3 = tableRow.insertCell(2);
+                        cell3.textContent = patient.age;
 
-                const cell4 = tableRow.insertCell(3);
-                cell4.textContent = patient.sex;
+                        const cell4 = tableRow.insertCell(3);
+                        cell4.textContent = patient.sex;
 
-                const cell5 = tableRow.insertCell(4);
-                cell5.textContent = patient.info;
+                        const cell5 = tableRow.insertCell(4);
+                        cell5.textContent = patient.info;
 
-                const cell6 = tableRow.insertCell(5);
-                cell6.textContent = patient.client_device_id;  
+                        const cell6 = tableRow.insertCell(5);
+                        cell6.textContent = patient.device_id;  
 
-                // Create "view" button
-                const viewButton = document.createElement("button");
-                viewButton.textContent = "View";
-                viewButton.className = "btn btn-primary btn-sm";
-                viewButton.style.marginRight = "20px";
-                viewButton.addEventListener("click", () => view_page(patient.pa_id));
+                        // Create "view" button
+                        const viewButton = document.createElement("button");
+                        viewButton.textContent = "View";
+                        viewButton.className = "btn btn-primary btn-sm";
+                        viewButton.style.marginRight = "20px";
+                        viewButton.addEventListener("click", () => view_page(patient.pa_id));
 
-                // Create "delete" button
-                const deleteButtonElement = document.createElement("button");
-                deleteButtonElement.textContent = "Delete";
-                deleteButtonElement.className = "btn btn-sm btn-danger";
-                deleteButtonElement.addEventListener("click", () => showModal(patient.pa_id));
+                        // Create "delete" button
+                        const deleteButtonElement = document.createElement("button");
+                        deleteButtonElement.textContent = "Delete";
+                        deleteButtonElement.className = "btn btn-sm btn-danger";
+                        deleteButtonElement.addEventListener("click", () => showModal(patient.pa_id));
 
-                const cell7 = tableRow.insertCell(6);
-                cell7.appendChild(viewButton);
-                cell7.appendChild(deleteButtonElement);
-            });
-        });
-        }   
+                        const cell7 = tableRow.insertCell(6);
+                        cell7.appendChild(viewButton);
+                        cell7.appendChild(deleteButtonElement);
+                    });
+                });
+            }   
     }
 
     function loadPage(currentPage) {
         fetch('home/get_all_patients?page=' + currentPage, {
             method: "get",
         })
-        .then(response => response.json())
-        .then(data => {
-            total_pages = data.total_pages;
-            const tableBody = document.querySelector("#table-test tbody");
-            tableBody.innerHTML = "";  // Clear existing table data
+            .then(response => response.json())
+            .then(data => {
+                total_pages = data.total_pages;
+                const tableBody = document.querySelector("#table-test tbody");
+                tableBody.innerHTML = "";  // Clear existing table data
 
-            data.patient_list.forEach((patient) => {
-                const tableRow = tableBody.insertRow();
+                data.patient_list.forEach((patient) => {
+                    const tableRow = tableBody.insertRow();
 
-                const cell1 = tableRow.insertCell(0);
-                cell1.textContent = patient.pa_id;
+                    const cell1 = tableRow.insertCell(0);
+                    cell1.textContent = patient.pa_id;
 
-                const cell2 = tableRow.insertCell(1);
-                cell2.textContent = patient.pa_name;
+                    const cell2 = tableRow.insertCell(1);
+                    cell2.textContent = patient.pa_name;
 
-                const cell3 = tableRow.insertCell(2);
-                cell3.textContent = patient.age;
+                    const cell3 = tableRow.insertCell(2);
+                    cell3.textContent = patient.age;
 
-                const cell4 = tableRow.insertCell(3);
-                cell4.textContent = patient.sex;
+                    const cell4 = tableRow.insertCell(3);
+                    cell4.textContent = patient.sex;
 
-                const cell5 = tableRow.insertCell(4);
-                cell5.textContent = patient.info;
+                    const cell5 = tableRow.insertCell(4);
+                    cell5.textContent = patient.info;
 
-                const cell6 = tableRow.insertCell(5);
-                cell6.textContent = patient.device_id;  
+                    const cell6 = tableRow.insertCell(5);
+                    cell6.textContent = patient.device_id;  
 
-                // Create "view" button
-                const viewButton = document.createElement("button");
-                viewButton.textContent = "View";
-                viewButton.className = "btn btn-primary btn-sm";
-                viewButton.style.marginRight = "20px";
-                viewButton.addEventListener("click", () => view_page(patient.pa_id));
+                    // Create "view" button
+                    const viewButton = document.createElement("button");
+                    viewButton.textContent = "View";
+                    viewButton.className = "btn btn-primary btn-sm";
+                    viewButton.style.marginRight = "20px";
+                    viewButton.addEventListener("click", () => view_page(patient.pa_id));
 
-                // Create "delete" button
-                const deleteButtonElement = document.createElement("button");
-                deleteButtonElement.textContent = "Delete";
-                deleteButtonElement.className = "btn btn-sm btn-danger";
-                deleteButtonElement.addEventListener("click", () => showModal(patient.pa_id));
+                    // Create "delete" button
+                    const deleteButtonElement = document.createElement("button");
+                    deleteButtonElement.textContent = "Delete";
+                    deleteButtonElement.className = "btn btn-sm btn-danger";
+                    deleteButtonElement.addEventListener("click", () => showModal(patient.pa_id));
 
 
-                const cell7 = tableRow.insertCell(6);
-                cell7.appendChild(viewButton);
-                cell7.appendChild(deleteButtonElement);
+                    const cell7 = tableRow.insertCell(6);
+                    cell7.appendChild(viewButton);
+                    cell7.appendChild(deleteButtonElement);
+                });
+            })
+            .catch(error => {
+                console.error(error);
             });
-        })
-        .catch(error => {
-            console.error(error);
-        });
     }
-
-// Note: You might also need to adjust the `view_page` and `delete_page` functions if the URLs or logic for those operations has changed for patients.
-
-
 
     function last_page() {
         if (currentPage > 1) {
