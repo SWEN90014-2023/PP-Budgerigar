@@ -26,7 +26,7 @@ class ClinicianInfoAdmin(admin.ModelAdmin):
 @admin.register(PatientInfo)
 class PatientInfoAdmin(admin.ModelAdmin):
     # pass
-    list_display = ['pa_id','cli_id','pa_name','age', 'sex', 'create_time', 'info', 'return_href']
+    list_display = ['pa_id','cli_id','pa_name','age', 'sex', 'create_time', 'info']
 
     readonly_fields = ['create_time']
 
@@ -46,6 +46,4 @@ class PatientInfoAdmin(admin.ModelAdmin):
     #         obj.info = obj.info + ' (created)'
     #     super(PatientInfoAdmin,self).save_model(request, obj, form, change)
 
-    #自定义html
-    def return_href(self, obj):
-        return format_html('<a href="{}"> link', 'https://www.baidu.com')
+   

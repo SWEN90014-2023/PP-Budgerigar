@@ -1,0 +1,61 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block content %}
+  <div class="row">
+    <!-- Patient Information block -->
+    <div class="col-12 col-xl-6">
+      <div class="card card-body border-0 shadow mb-4">
+        <h2 class="h5 mb-4">Patient Information</h2>
+        <form>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="pa_name">Patient Name</label>
+              <input class="form-control" id="pa_name" type="text" value="{{ patient.pa_name }}" readonly>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="age">Age</label>
+              <input class="form-control" id="age" type="text" value="{{ patient.age }}" readonly>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="sex">Gender</label>
+              <input class="form-control" id="sex" type="text" value="{{ patient.sex }}" readonly>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="info">Info</label>
+              <textarea class="form-control" id="info" rows="3" readonly>{{ patient.info }}</textarea>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="device_id">Device ID</label>
+              <input class="form-control" id="device_id" type="text" value="{{ patient.device_id }}" readonly>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="create_time">Creation Time</label>
+              <input class="form-control" id="create_time" type="text" value="{{ patient.create_time }}" readonly>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- AWARE Sensor block -->
+    <div class="col-12 col-xl-6">
+      <div class="card card-body border-0 shadow mb-4">
+        <h2 class="h5 mb-4">AWARE Sensor</h2>
+        <div class="text-center">
+            <button class="btn btn-primary mb-2">Screen</button>
+        </div>
+      </div>
+    </div>
+  </div>
+    
+  <div class="row">
+    <div class="col-12">
+      <a href="{% url 'home_page' %}" class="btn btn-secondary">Back</a>
+    </div>
+  </div>
+{% endblock content %}

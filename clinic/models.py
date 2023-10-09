@@ -10,7 +10,7 @@ class ClinicianInfo(models.Model):
         return 'Clinician_name: {}'.format(self.cli_name)
 
 class PatientInfo(models.Model):
-    pa_id = models.CharField(primary_key=True, max_length=6)
+    pa_id = models.AutoField(primary_key=True)
     cli_id = models.CharField(max_length=6,default=00)
     pa_name = models.CharField(max_length=32)
     pa_psw = models.CharField(max_length=32)
@@ -18,6 +18,7 @@ class PatientInfo(models.Model):
     sex = models.CharField(choices=(('Male','Male'), ('Female','Female')), max_length=6, default="Male")
     info = models.TextField()
     create_time = models.DateTimeField(default=datetime.datetime.now)
+    device_id = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return 'patient_name: {}'.format(self.pa_name)

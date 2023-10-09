@@ -6,21 +6,22 @@
     <div class="col-12 col-xl-8">
       <div class="card card-body border-0 shadow mb-4">
         <h2 class="h5 mb-4">Add New Patient</h2>
-        <form action="/savePatient" method="post">
+        <form action="/savePatient/" method="post">
+
           {% csrf_token %}
           <div class="row">
-            <div class="col-md-6 mb-3">
-              <div>
-                <label for="pa_id">Patient ID</label>
-                <input class="form-control" id="pa_id" name="pa_id" type="text" placeholder="Enter Patient ID" required>
-              </div>
-            </div>
             <div class="col-md-6 mb-3">
               <div>
                 <label for="pa_name">Patient Name</label>
                 <input class="form-control" id="pa_name" name="pa_name" type="text" placeholder="Enter Patient Name" required>
               </div>
             </div>
+            <div class="col-md-6 mb-3">
+              <div>
+                <label for="pa_psw">Password</label>
+                <input class="form-control" id="pa_psw" name="pa_psw" type="password" placeholder="Enter Password" required>
+              </div>
+          </div>
           </div>
           <div class="row">
             <div class="col-md-6 mb-3">
@@ -46,8 +47,8 @@
             </div>
             <div class="col-md-6 mb-3">
               <div>
-                <label for="client_device_id">Device ID</label>
-                <input class="form-control" id="client_device_id" name="client_device_id" type="text" placeholder="Enter Device ID">
+                <label for="device_id">Device ID</label>
+                <input class="form-control" id="device_id" name="device_id" type="text" placeholder="Enter Device ID">
               </div>
             </div>
           </div>
@@ -55,6 +56,11 @@
             <button class="btn btn-gray-800 mt-2 animate-up-2" type="submit">Add Patient</button>
           </div>
         </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <a href="{% url 'home_page' %}" class="btn btn-secondary">Back</a>
       </div>
     </div>
   </div>

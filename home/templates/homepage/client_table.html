@@ -1,0 +1,339 @@
+<div style="height: 370px;">
+    <table id="table-test" class="table table-centered table-nowrap mb-0 rounded">
+        <thead class="thead-light">
+            <tr>
+                <th class="border-0 rounded-start center-text">Patient ID</th>
+                <th class="border-0 center-text">Name</th>
+                <th class="border-0 center-text">Age</th>
+                <th class="border-0 center-text">Gender</th>
+                <th class="border-0 center-text">Info</th>
+                <th class="border-0 center-text">Device ID</th>
+                <th class="border-0 rounded-end center-text">operation</th>
+            </tr>
+        </thead>
+        
+        <tbody class="center-text"></tbody>
+        <!-- Empty table body -->
+    </table>
+</div>
+
+<div class="container" style="display: flex; bottom: 0px;">
+    <nav aria-label="Page navigation example" id="pagination" style="margin-left: 35%">
+        <div class="pagination">
+            <button class="btn btn-gray-100" style="width: 120px; text-align: center; margin-right: 10px;" onclick="last_page()">Previous
+            </button>
+            <button class="btn btn-gray-100" style="width: 120px; text-align: center; margin-left: 10px;" onclick="next_page()">Next
+            </button>
+        </div>
+    </nav>
+</div>
+<!-- The Modal -->
+<div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <p id="modalMessage">Are you sure you want to delete this patient?</p>
+      <button id="confirmDelete">Confirm</button>
+      <button id="cancelDelete">Cancel</button>
+    </div>
+  </div>  
+</div>
+<style>
+    .center-text {
+        text-align: center;
+    }
+  
+    /* The Modal (background) */
+    .modal {
+        display: none; 
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%; 
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.4);
+    }
+
+    /* Modal Content */
+    .modal-content {
+        position: relative;
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 30%;
+        text-align: center;
+        border-radius: 8px; /* Rounded corners */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
+    }
+
+    /* The Close Button */
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    /* Buttons */
+    #confirmDelete, #cancelDelete {
+        padding: 10px 20px;
+        margin: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    #confirmDelete {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    #cancelDelete {
+        background-color: #f44336;
+        color: white;
+    }
+
+    #confirmDelete:hover {
+        background-color: #45a049;
+    }
+
+    #cancelDelete:hover {
+        background-color: #da190b;
+    }
+</style>
+
+<script>
+    const clinician_id =
+    {{ request.user.id }}
+    var modal = document.getElementById("myModal");
+    var span = document.getElementsByClassName("close")[0];
+    var confirmBtn = document.getElementById("confirmDelete");
+    var cancelBtn = document.getElementById("cancelDelete");
+    const paginationContainer = document.getElementById("pagination");
+    const previousPageButton = document.getElementById("previous-page");
+    const nextPageButton = document.getElementById("next-page");
+    var total_pages = 1;
+
+    let currentPage = 1; //initial
+
+    loadPage(1)
+
+    function renderSearch(searchname) { 
+    if (searchname === 'all') {
+        loadPage(1);
+    } else {
+        // Use the correct URL for getting patients
+        fetch('home/get_all_patients?page=' + currentPage, {
+            method: "get",
+        })
+        .then(response => response.json())
+        .then(data => {
+            total_pages = data.total_pages;  // Assuming your backend sends the total_pages
+            const tableBody = document.querySelector("#table-test tbody");
+            tableBody.innerHTML = "";  // Clear existing table data
+
+            data.patient_list.forEach((patient) => {
+                const tableRow = tableBody.insertRow();
+
+                const cell1 = tableRow.insertCell(0);
+                cell1.textContent = patient.pa_id;
+
+                const cell2 = tableRow.insertCell(1);
+                cell2.textContent = patient.pa_name;
+
+                const cell3 = tableRow.insertCell(2);
+                cell3.textContent = patient.age;
+
+                const cell4 = tableRow.insertCell(3);
+                cell4.textContent = patient.sex;
+
+                const cell5 = tableRow.insertCell(4);
+                cell5.textContent = patient.info;
+
+                const cell6 = tableRow.insertCell(5);
+                cell6.textContent = patient.client_device_id;  
+
+                // Create "view" button
+                const viewButton = document.createElement("button");
+                viewButton.textContent = "View";
+                viewButton.className = "btn btn-primary btn-sm";
+                viewButton.style.marginRight = "20px";
+                viewButton.addEventListener("click", () => view_page(patient.pa_id));
+
+                // Create "delete" button
+                const deleteButtonElement = document.createElement("button");
+                deleteButtonElement.textContent = "Delete";
+                deleteButtonElement.className = "btn btn-sm btn-danger";
+                deleteButtonElement.addEventListener("click", () => showModal(patient.pa_id));
+
+                const cell7 = tableRow.insertCell(6);
+                cell7.appendChild(viewButton);
+                cell7.appendChild(deleteButtonElement);
+            });
+        });
+        }   
+    }
+
+    function loadPage(currentPage) {
+        fetch('home/get_all_patients?page=' + currentPage, {
+            method: "get",
+        })
+        .then(response => response.json())
+        .then(data => {
+            total_pages = data.total_pages;
+            const tableBody = document.querySelector("#table-test tbody");
+            tableBody.innerHTML = "";  // Clear existing table data
+
+            data.patient_list.forEach((patient) => {
+                const tableRow = tableBody.insertRow();
+
+                const cell1 = tableRow.insertCell(0);
+                cell1.textContent = patient.pa_id;
+
+                const cell2 = tableRow.insertCell(1);
+                cell2.textContent = patient.pa_name;
+
+                const cell3 = tableRow.insertCell(2);
+                cell3.textContent = patient.age;
+
+                const cell4 = tableRow.insertCell(3);
+                cell4.textContent = patient.sex;
+
+                const cell5 = tableRow.insertCell(4);
+                cell5.textContent = patient.info;
+
+                const cell6 = tableRow.insertCell(5);
+                cell6.textContent = patient.device_id;  
+
+                // Create "view" button
+                const viewButton = document.createElement("button");
+                viewButton.textContent = "View";
+                viewButton.className = "btn btn-primary btn-sm";
+                viewButton.style.marginRight = "20px";
+                viewButton.addEventListener("click", () => view_page(patient.pa_id));
+
+                // Create "delete" button
+                const deleteButtonElement = document.createElement("button");
+                deleteButtonElement.textContent = "Delete";
+                deleteButtonElement.className = "btn btn-sm btn-danger";
+                deleteButtonElement.addEventListener("click", () => showModal(patient.pa_id));
+
+
+                const cell7 = tableRow.insertCell(6);
+                cell7.appendChild(viewButton);
+                cell7.appendChild(deleteButtonElement);
+            });
+        })
+        .catch(error => {
+            console.error(error);
+        });
+    }
+
+// Note: You might also need to adjust the `view_page` and `delete_page` functions if the URLs or logic for those operations has changed for patients.
+
+
+
+    function last_page() {
+        if (currentPage > 1) {
+            currentPage = currentPage - 1
+            loadPage(currentPage);
+        }
+    }
+
+    function next_page() {
+        if (currentPage < total_pages) {
+            currentPage = currentPage + 1
+            loadPage(currentPage);
+        }
+    }
+
+    function view_page(patientId) {
+    var url = "/viewPatient?patientId=" + patientId;
+    window.location.href = url;
+    }
+
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    function delete_patient(pa_id) {
+        const csrftoken = getCookie('csrftoken');
+
+        fetch(`/delete_patient/${pa_id}/`, {
+            method: "DELETE",
+            headers: {
+                "X-CSRFToken": csrftoken
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Failed to delete');
+            }
+        })
+        .then(data => {
+            if(data.success) {
+                document.getElementById("modalMessage").textContent = "Successfully deleted";
+                //close window after 1 second
+                setTimeout(() => {
+                    modal.style.display = "none";
+                    location.reload();
+                }, 1000);
+            } else {
+                document.getElementById("modalMessage").textContent = "Failed to delete";
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            document.getElementById("modalMessage").textContent = "Error occurred!";
+        });
+    }
+
+
+    function showModal(patientId) {
+        modal.style.display = "block";
+        // if user clink confirm
+        confirmBtn.onclick = function() {
+            delete_patient(patientId);  
+        }
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        } 
+
+        cancelBtn.onclick = function() {
+            modal.style.display = "none";
+        }   
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    }
+
+</script>
