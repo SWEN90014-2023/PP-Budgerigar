@@ -3,21 +3,16 @@ from django.http import HttpResponse
 from admin_volt_pro.forms import RegistrationForm, LoginForm, UserPasswordResetForm, UserPasswordChangeForm, UserSetPasswordForm
 from django.contrib.auth.views import LoginView, PasswordResetView, PasswordChangeView, PasswordResetConfirmView
 from django.contrib.auth import logout
-<<<<<<< HEAD
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout as django_logout
 from clinic.models import PatientInfo
 from django.http import JsonResponse
-
-
-=======
 from django.urls import reverse_lazy
 from django import forms
 from django.shortcuts import render
 from .models import DailyUnlock
 from .forms import DateForm
 import json
->>>>>>> a93501db4756245606dbd53419944c1679d911ed
 
 # Create your views here.
 
@@ -27,7 +22,6 @@ class UserLoginView(LoginView):
   next_page = '/home'
 
 def homePage(request):
-<<<<<<< HEAD
     return render(request, "homepage/index.html")
 
 def logout_view(request):
@@ -110,8 +104,6 @@ def delete_patient(request, pa_id):
     except Exception as e:
         return JsonResponse({"success": False, "message": f"Error: {str(e)}"}, status=500)
 
-
-=======
     return render(request, "home.html")
 
 def chart_view(request):
@@ -143,4 +135,3 @@ def chart_view(request):
         'form': form,
         'chart_data': json.dumps(chart_data) if chart_data else None,
     })
->>>>>>> a93501db4756245606dbd53419944c1679d911ed
