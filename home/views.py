@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from admin_volt_pro.forms import RegistrationForm, LoginForm, UserPasswordResetForm, UserPasswordChangeForm, UserSetPasswordForm
 from django.contrib.auth.views import LoginView, PasswordResetView, PasswordChangeView, PasswordResetConfirmView
@@ -19,7 +19,7 @@ import json
 class UserLoginView(LoginView):
   form_class = LoginForm
   template_name = 'login.html'
-  next_page = '/home'
+  next_page = '/dashboard'
 
 def homePage(request):
     return render(request, "homepage/index.html")
@@ -84,8 +84,7 @@ def save_patient(request):
             device_id=device_id
         )
         patient.save()
-
-
+        
     return redirect('home_page')
 
 def view_patient(request):
@@ -103,8 +102,6 @@ def delete_patient(request, pa_id):
         return JsonResponse({"success": False, "message": "Patient not found."}, status=404)
     except Exception as e:
         return JsonResponse({"success": False, "message": f"Error: {str(e)}"}, status=500)
-
-    return render(request, "home.html")
 
 def chart_view(request):
     form = DateForm(request.GET or None)
@@ -135,3 +132,4 @@ def chart_view(request):
         'form': form,
         'chart_data': json.dumps(chart_data) if chart_data else None,
     })
+
