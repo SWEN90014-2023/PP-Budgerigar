@@ -10,8 +10,9 @@ from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django import forms
 from django.shortcuts import render
-from .models import DailyUnlock
-from .forms import DateForm
+from .models import DailyDuration, DailyUnlock
+from .forms import DateForm, get_available_dates
+from datetime import datetime
 import json
 
 # Create your views here.
@@ -112,12 +113,26 @@ def get_patient_by_name(request, clinician_id, name):
     return JsonResponse(patients_list, safe=False)
 
 def chart_view(request):
-    form = DateForm(request.GET or None)
+    return render(request, "chartView/index.html")
+
+def get_date(request):
+    device_id = request.GET.get('device_id')
+    available_dates = get_available_dates(device_id)
+    response_data = {
+        'available_dates': available_dates,
+    }
+    return JsonResponse(response_data)
+
+def daily_unlock(request):
     chart_data = None
+    device_id = request.GET.get('device_id')
+    print(device_id)
+    form = DateForm(request.GET or None, device_id=device_id)
+    form_errors = {}
     if form.is_valid():
         selected_date = form.cleaned_data['date']
         try:
-            daily_unlock = DailyUnlock.objects.get(date=selected_date)
+            daily_unlock = DailyUnlock.objects.get(date=selected_date, device_id=device_id)
             chart_data = {
                 'categories': ['0-2', '3-5', '6-8', '9-11', '12-14', '15-17', '18-20', '21-23'],
                 'series': [{
@@ -135,9 +150,52 @@ def chart_view(request):
                 }]
             }
         except DailyUnlock.DoesNotExist:
-            pass  # Handle the case where the data does not exist
-    return render(request, 'chart.html', {
-        'form': form,
-        'chart_data': json.dumps(chart_data) if chart_data else None,
-    })
+            pass
+    else:
+        # Collect form errors if the form is not valid
+        form_errors = {field: errors for field, errors in form.errors.items()}
+    
+    response_data = {
+        'form_errors': form_errors,
+        'chart_data': chart_data if chart_data else None,
+    }
+    print(response_data)
+    return JsonResponse(response_data)
+
+def daily_duration(request):
+    device_id = request.GET.get('device_id')
+    form = DateForm(request.GET or None, device_id=device_id)
+    chart_data = None
+    form_errors = {}
+
+    if form.is_valid():
+        selected_date = form.cleaned_data['date']
+        try:
+            daily_duration = DailyDuration.objects.get(date=selected_date, device_id=device_id)
+            chart_data = {
+                'categories': ['0-2', '3-5', '6-8', '9-11', '12-14', '15-17', '18-20', '21-23'],
+                'series': [{
+                    'name': 'Screen Time',
+                    'data': [
+                        int(daily_duration.duration_0_2 / 60),
+                        int(daily_duration.duration_3_5 / 60),
+                        int(daily_duration.duration_6_8 / 60),
+                        int(daily_duration.duration_9_11 / 60),
+                        int(daily_duration.duration_12_14 / 60),
+                        int(daily_duration.duration_15_17 / 60),
+                        int(daily_duration.duration_18_20 / 60),
+                        int(daily_duration.duration_21_23 / 60)
+                    ]
+                }]
+            }
+        except DailyDuration.DoesNotExist:
+            pass
+    else:
+        form_errors = {field: errors for field, errors in form.errors.items()}
+
+    response_data = {
+        'form_errors': form_errors,
+        'chart_data': chart_data if chart_data else None,
+    }
+    return JsonResponse(response_data)
 

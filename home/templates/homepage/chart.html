@@ -1,0 +1,57 @@
+{% extends 'layouts/base.html' %} {% load static %} {% block content %}
+    <div class="row">
+        <div class="col-12 mb-2 mt-4 ms-4">
+            <h2>Client List</h2>
+        </div>
+        <!-- Chart Controls -->
+        <div class="col-12 mb-3 mt-2 ms-1 me-1" style="display: flex; justify-content: flex-end;">
+            <input type="date" id="selectedDate" class="form-control me-2" style="width: auto;" />
+            <button onclick="loadChart()" class="btn btn-info">Show Chart</button>
+        </div>
+        <!-- / Chart Controls -->
+        <!-- Chart Container -->
+        <div class="col-12 mb-3">
+            <div class="card border-0 shadow">
+                <div class="card-body">
+                    <div id="chart"></div>
+                </div>
+            </div>
+        </div>
+        <!-- / Chart Container -->
+        <div class="col-12 mb-3 mt-2 ms-1 me-1" style="width:100%; display: flex;flex-direction: row; justify-content: space-between;">
+            <!-- / Search form -->
+            <!-- ... rest of your code ... -->
+        </div>
+    </div>
+
+    <script>
+        function loadChart() {
+            const selectedDate = document.getElementById('selectedDate').value;
+            const url = `{% url 'chart_view' %}?date=${selectedDate}`;
+    
+            $.get(url, function (data) {
+                const chartData = data.chart_data;
+                const deviceId = data.device_id;
+                if (chartData) {
+                    const options = {
+                        chart: {
+                            type: 'bar'
+                        },
+                        series: chartData.series,
+                        xaxis: {
+                            categories: chartData.categories
+                        }
+                    };
+                    const chart = new ApexCharts(document.querySelector("#chart"), options);
+                    chart.render();
+                } else {
+                    alert(`No data available for the selected date. Device ID: ${deviceId}`);
+                }
+            });
+        }
+    
+        window.onload = loadChart;
+        
+        // ... rest of your script functions ...
+    </script>
+{% endblock content %}

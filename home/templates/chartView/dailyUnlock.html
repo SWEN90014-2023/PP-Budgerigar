@@ -1,0 +1,68 @@
+{% load static %} 
+{% block content %}
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>  <!-- Add jQuery -->
+</head>
+
+<form id="chartForm" method="GET" action="{% url 'daily_unlock' %}">
+    <input type="hidden" name="device_id" value="{{ request.GET.device_id }}">
+    Date: <select id="id_date" name="date"></select>
+    <input type="submit" value="Show Chart" onclick="loadChart(); return false;">
+</form>
+
+<div id="chart"></div>
+
+<script>
+    function loadDates() {
+        const deviceId = document.querySelector('input[name="device_id"]').value;
+        fetch(`/get_date/?device_id=${deviceId}`)
+            .then(response => response.json())
+            .then(data => {
+                const dateSelector = document.getElementById('id_date');
+                dateSelector.innerHTML = '';  // clear any existing options
+                data.available_dates.forEach(date => {
+                    const optionElement = document.createElement('option');
+                    optionElement.value = date;
+                    optionElement.textContent = date;
+                    dateSelector.appendChild(optionElement);
+                });
+            });
+    }
+
+    function loadChart() {
+        // Serialize form data to a query string
+        var formData = $('#chartForm').serialize();
+        var url = "{% url 'daily_unlock' %}?" + formData;
+
+        $.get(url, function(data) {
+            if (data.chart_data) {
+                var chartData = data.chart_data;  // 直接使用 data.chart_data
+                var options = {
+                    chart: {
+                        type: 'bar'
+                    },
+                    series: chartData.series,
+                    xaxis: {
+                        categories: chartData.categories
+                    }
+                }
+                var chart = new ApexCharts(document.querySelector("#chart"), options);
+                chart.render();
+            }
+            if (data.form_errors) {
+                // Handle form errors here
+                console.error(data.form_errors);
+            }
+        });
+    }
+
+
+    // Load chart and dates on page load
+    $(document).ready(function() {
+        loadDates();
+        loadChart();
+    });
+</script>
+
+{% endblock content %}

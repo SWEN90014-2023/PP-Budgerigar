@@ -1,0 +1,34 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12 mb-2 mt-4 ms-4">
+        <h2>Chart View</h2>
+    </div>
+    <!-- Chart Controls -->
+    <!-- / Chart Controls -->
+    <!-- Chart Container -->
+    <div class="col-12 mb-3">
+        <div class="card border-0 shadow">
+            <div class="card-body">
+                {% include 'chartView/dailyUnlock.html' %}
+            </div>
+        </div>
+    </div>
+    <!-- / Chart Container -->
+    <!-- New Chart Container -->
+    <div class="col-12 mb-3">
+        <div class="card border-0 shadow">
+            <div class="card-body">
+                {% include 'chartView/dailyDuration.html' %}
+            </div>
+        </div>
+    </div>
+    <!-- / New Chart Container -->
+</div>
+
+<script>
+    // Any additional JavaScript code
+</script>
+{% endblock content %}

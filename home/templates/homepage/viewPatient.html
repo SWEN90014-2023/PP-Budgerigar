@@ -47,12 +47,12 @@
       <div class="card card-body border-0 shadow mb-4">
         <h2 class="h5 mb-4">AWARE Sensor</h2>
         <div class="text-center">
-            <button class="btn btn-primary mb-2">Screen</button>
+          <a href="{% url 'chart_view' %}?device_id={{ patient.device_id }}" class="btn btn-primary mb-2">Screen</a>
         </div>
       </div>
     </div>
   </div>
-    
+  
   <div class="row">
     <div class="col-12">
       <a href="{% url 'home_page' %}" class="btn btn-secondary">Back</a>
