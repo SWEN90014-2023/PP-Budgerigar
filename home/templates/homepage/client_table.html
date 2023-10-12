@@ -137,7 +137,7 @@
             // Use the correct URL for getting patients
             fetch('get_patient_by_name/' + clinician_id + '/' + searchname, {
                 method: 'GET'
-            })  
+            })
                 .then(response => response.json())
                 .then(data => {
                     total_pages = 1
