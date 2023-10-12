@@ -5,48 +5,48 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
-<form id="durationForm" method="GET" action="{% url 'daily_duration' %}">
+<form id="weeklyUnlockForm" method="GET" action="{% url 'weekly_unlock' %}">
     <input type="hidden" name="device_id" value="{{ request.GET.device_id }}">
-    Date: <select id="duration_date" name="date"></select>
-    <input type="submit" value="Show Chart" onclick="loadDurationChart(); return false;">
+    Week Start Date: <select id="id_week_start_date" name="week_start_date"></select>
+    <input type="submit" value="Show Chart" onclick="loadWeeklyUnlockChart(); return false;">
 </form>
 
-<div id="durationChart"></div>
+<div id="weeklyUnlockChart"></div>
 
 <script>
-    function loadDurationDates() {
+    function loadWeeklyUnlockDates() {
         const deviceId = document.querySelector('input[name="device_id"]').value;
-        fetch(`/get_date/?device_id=${deviceId}`)
+        fetch(`/get_week/?device_id=${deviceId}`)
             .then(response => response.json())
             .then(data => {
-                const dateSelector = document.getElementById('duration_date');
-                dateSelector.innerHTML = '';  // clear any existing options
-                data.available_dates.forEach(date => {
+                const dateSelector = document.getElementById('id_week_start_date');
+                dateSelector.innerHTML = '';
+                data.available_weeks.forEach(week => {
                     const optionElement = document.createElement('option');
-                    optionElement.value = date;
-                    optionElement.textContent = date;
+                    optionElement.value = week;
+                    optionElement.textContent = week;
                     dateSelector.appendChild(optionElement);
                 });
             });
     }
 
-    function loadDurationChart() {
-        var formData = $('#durationForm').serialize();
-        var url = "{% url 'daily_duration' %}?" + formData;
+    function loadWeeklyUnlockChart() {
+        var formData = $('#weeklyUnlockForm').serialize();
+        var url = "{% url 'weekly_unlock' %}?" + formData;
 
         $.get(url, function(data) {
             if (data.chart_data) {
                 var chartData = data.chart_data;
                 var options = {
                     chart: {
-                        type: 'bar'
+                        type: 'line'
                     },
                     series: chartData.series,
                     xaxis: {
                         categories: chartData.categories
                     }
                 }
-                var chart = new ApexCharts(document.querySelector("#durationChart"), options);
+                var chart = new ApexCharts(document.querySelector("#weeklyUnlockChart"), options);
                 chart.render();
             }
             if (data.form_errors) {
@@ -55,10 +55,9 @@
         });
     }
 
-    // Load chart and dates on page load
     $(document).ready(function() {
-        loadDurationDates();
-        loadDurationChart();
+        loadWeeklyUnlockDates();
+        loadWeeklyUnlockChart();
     });
 </script>
 

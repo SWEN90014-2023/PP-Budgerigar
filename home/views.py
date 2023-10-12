@@ -10,8 +10,8 @@ from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django import forms
 from django.shortcuts import render
-from .models import DailyDuration, DailyUnlock
-from .forms import DateForm, get_available_dates
+from .models import DailyDuration, DailyUnlock, WeeklyDuration, WeeklyUnlock
+from .forms import DateForm, WeekForm, get_available_dates, get_available_weeks
 from datetime import datetime
 import json
 
@@ -123,6 +123,14 @@ def get_date(request):
     }
     return JsonResponse(response_data)
 
+def get_week(request):
+    device_id = request.GET.get('device_id')
+    available_weeks = get_available_weeks(device_id)
+    response_data = {
+        'available_weeks': available_weeks,
+    }
+    return JsonResponse(response_data)
+
 def daily_unlock(request):
     chart_data = None
     device_id = request.GET.get('device_id')
@@ -177,14 +185,14 @@ def daily_duration(request):
                 'series': [{
                     'name': 'Screen Time',
                     'data': [
-                        int(daily_duration.duration_0_2 / 60),
-                        int(daily_duration.duration_3_5 / 60),
-                        int(daily_duration.duration_6_8 / 60),
-                        int(daily_duration.duration_9_11 / 60),
-                        int(daily_duration.duration_12_14 / 60),
-                        int(daily_duration.duration_15_17 / 60),
-                        int(daily_duration.duration_18_20 / 60),
-                        int(daily_duration.duration_21_23 / 60)
+                        round(daily_duration.duration_0_2 / 60, 2),
+                        round(daily_duration.duration_3_5 / 60, 2),
+                        round(daily_duration.duration_6_8 / 60, 2),
+                        round(daily_duration.duration_9_11 / 60, 2),
+                        round(daily_duration.duration_12_14 / 60, 2),
+                        round(daily_duration.duration_15_17 / 60, 2),
+                        round(daily_duration.duration_18_20 / 60, 2),
+                        round(daily_duration.duration_21_23 / 60, 2)
                     ]
                 }]
             }
@@ -199,3 +207,74 @@ def daily_duration(request):
     }
     return JsonResponse(response_data)
 
+def weekly_unlock(request):
+    device_id = request.GET.get('device_id')
+    form = WeekForm(request.GET or None, device_id=device_id)
+    chart_data = None
+    form_errors = {}
+
+    if form.is_valid():
+        week_start_date = form.cleaned_data['week_start_date']
+        try:
+            weekly_unlock = WeeklyUnlock.objects.get(week_start=week_start_date, device_id=device_id)
+            chart_data = {
+                'categories': ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+                'series': [{
+                    'name': 'Unlocks',
+                    'data': [
+                        weekly_unlock.Monday,
+                        weekly_unlock.Tuesday,
+                        weekly_unlock.Wednesday,
+                        weekly_unlock.Thursday,
+                        weekly_unlock.Friday,
+                        weekly_unlock.Saturday,
+                        weekly_unlock.Sunday
+                    ]
+                }]
+            }
+        except WeeklyUnlock.DoesNotExist:
+            pass
+    else:
+        form_errors = {field: errors for field, errors in form.errors.items()}
+    
+    response_data = {
+        'form_errors': form_errors,
+        'chart_data': chart_data if chart_data else None,
+    }
+    return JsonResponse(response_data)
+
+def weekly_duration(request):
+    device_id = request.GET.get('device_id')
+    form = WeekForm(request.GET or None, device_id=device_id)
+    chart_data = None
+    form_errors = {}
+
+    if form.is_valid():
+        week_start_date = form.cleaned_data['week_start_date']
+        try:
+            weekly_duration = WeeklyDuration.objects.get(week_start=week_start_date, device_id=device_id)
+            chart_data = {
+                'categories': ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+                'series': [{
+                    'name': 'Screen Time',
+                    'data': [
+                        int(weekly_duration.Monday / 60),
+                        int(weekly_duration.Tuesday / 60),
+                        int(weekly_duration.Wednesday / 60),
+                        int(weekly_duration.Thursday / 60),
+                        int(weekly_duration.Friday / 60),
+                        int(weekly_duration.Saturday / 60),
+                        int(weekly_duration.Sunday / 60)
+                    ]
+                }]
+            }
+        except WeeklyDuration.DoesNotExist:
+            pass
+    else:
+        form_errors = {field: errors for field, errors in form.errors.items()}
+    
+    response_data = {
+        'form_errors': form_errors,
+        'chart_data': chart_data if chart_data else None,
+    }
+    return JsonResponse(response_data)

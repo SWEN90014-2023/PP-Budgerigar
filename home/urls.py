@@ -15,7 +15,10 @@ urlpatterns = [
     path('get_patient_by_name/<int:clinician_id>/<str:name>/', views.get_patient_by_name, name='get_patient_by_name'),
     ##path('chart/<str:device_id>/',views.chart_view, name='chart_view'),
     path('chartView/',views.chart_view, name='chart_view'),
-    path('dailyUnlock/',views.daily_unlock,name='daily_unlock'),
+    path('daily_unlock/',views.daily_unlock,name='daily_unlock'),
     path('get_date/', views.get_date, name='get_date'),
+    path('get_week/', views.get_week, name='get_week'),
     path('daily_duration/', views.daily_duration, name='daily_duration'),
+    path('weekly_unlock/', views.weekly_unlock, name='weekly_unlock'),
+    path('weekly_duration/', views.weekly_duration, name='weekly_duration'),
 ]

@@ -2,33 +2,53 @@
 {% load static %}
 
 {% block content %}
-<div class="row">
-    <div class="col-12 mb-2 mt-4 ms-4">
+<div class="row mt-4 ms-4">
+    <div class="col-12 mb-4">
         <h2>Chart View</h2>
     </div>
-    <!-- Chart Controls -->
-    <!-- / Chart Controls -->
-    <!-- Chart Container -->
-    <div class="col-12 mb-3">
-        <div class="card border-0 shadow">
+    <div class="col-lg-6 mb-3">
+        <div class="card border-0 shadow-lg">
+            <div class="card-header bg-primary text-white">
+                <i class="fas fa-lock me-2"></i>Daily Unlock
+            </div>
             <div class="card-body">
                 {% include 'chartView/dailyUnlock.html' %}
             </div>
         </div>
     </div>
-    <!-- / Chart Container -->
-    <!-- New Chart Container -->
-    <div class="col-12 mb-3">
-        <div class="card border-0 shadow">
+
+    <div class="col-lg-6 mb-3">
+        <div class="card border-0 shadow-lg">
+            <div class="card-header bg-success text-white">
+                <i class="fas fa-clock me-2"></i>Daily Duration
+            </div>
             <div class="card-body">
                 {% include 'chartView/dailyDuration.html' %}
             </div>
         </div>
     </div>
-    <!-- / New Chart Container -->
+    <div class="col-lg-6 mb-3">
+        <div class="card border-0 shadow-lg">
+            <div class="card-header bg-warning text-white">
+                <i class="fas fa-calendar-week me-2"></i>Weekly Unlock
+            </div>
+            <div class="card-body">
+                {% include 'chartView/weeklyUnlock.html' %}
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 mb-3">
+        <div class="card border-0 shadow-lg">
+            <div class="card-header bg-info text-white">
+                <i class="fas fa-calendar-alt me-2"></i>Weekly Duration
+            </div>
+            <div class="card-body">
+                {% include 'chartView/weeklyDuration.html' %}
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
-    // Any additional JavaScript code
 </script>
 {% endblock content %}

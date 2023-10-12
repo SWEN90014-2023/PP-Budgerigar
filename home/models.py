@@ -33,3 +33,35 @@ class DailyDuration(models.Model):
     class Meta:
         db_table = 'daily_durations'
         unique_together = (('date', 'device_id'),)
+
+class WeeklyUnlock(models.Model):
+    id = models.AutoField(primary_key=True)
+    week_start = models.DateField()
+    device_id = models.CharField(max_length=150)
+    Monday = models.IntegerField()
+    Tuesday = models.IntegerField()
+    Wednesday = models.IntegerField()
+    Thursday = models.IntegerField()
+    Friday = models.IntegerField()
+    Saturday = models.IntegerField()
+    Sunday = models.IntegerField()
+
+    class Meta:
+        unique_together = (('week_start', 'device_id'),)
+        db_table = 'weekly_unlocks'
+
+class WeeklyDuration(models.Model):
+    id = models.AutoField(primary_key=True)
+    week_start = models.DateField()
+    device_id = models.CharField(max_length=150)
+    Monday = models.FloatField()
+    Tuesday = models.FloatField()
+    Wednesday = models.FloatField()
+    Thursday = models.FloatField()
+    Friday = models.FloatField()
+    Saturday = models.FloatField()
+    Sunday = models.FloatField()
+
+    class Meta:
+        unique_together = (('week_start', 'device_id'),)
+        db_table = 'weekly_durations'
