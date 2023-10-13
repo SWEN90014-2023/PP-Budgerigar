@@ -8,6 +8,12 @@
 <form id="durationForm" method="GET" action="{% url 'daily_duration' %}">
     <input type="hidden" name="device_id" value="{{ request.GET.device_id }}">
     Date: <select id="duration_date" name="date"></select>
+    Chart Type:
+    <select id="id_daily_duration_chart_type" name="chart_type">
+        <option value="line">Line</option>
+        <option value="bar">Bar</option>
+        <option value="area">area</option>
+    </select>
     <input type="submit" value="Show Chart" onclick="loadDurationChart(); return false;">
 </form>
 
@@ -31,15 +37,16 @@
     }
 
     function loadDurationChart() {
-        var formData = $('#durationForm').serialize();
-        var url = "{% url 'daily_duration' %}?" + formData;
+        var formData = $('#durationForm').serialize();  // Serialize the form data
+        var url = "{% url 'daily_duration' %}?" + formData;  // Construct the URL using the serialized form data
+        var selectedChartType = document.getElementById('id_daily_duration_chart_type').value;  // Get the selected chart type
 
         $.get(url, function(data) {
             if (data.chart_data) {
                 var chartData = data.chart_data;
                 var options = {
                     chart: {
-                        type: 'bar'
+                        type: selectedChartType
                     },
                     series: chartData.series,
                     xaxis: {

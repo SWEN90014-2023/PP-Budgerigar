@@ -8,6 +8,12 @@
 <form id="weeklyDurationForm" method="GET" action="{% url 'weekly_duration' %}">
     <input type="hidden" name="device_id" value="{{ request.GET.device_id }}">
     Week Start Date: <select id="id_week_duration" name="week_start_date"></select>
+    Chart Type:
+    <select id="id_week_dutation_chart_type" name="chart_type">
+        <option value="line">Line</option>
+        <option value="bar">Bar</option>
+        <option value="area">area</option>
+    </select>
     <input type="submit" value="Show Chart" onclick="loadWeeklyDurationChart(); return false;">
 </form>
 
@@ -31,6 +37,8 @@
     }
 
     function loadWeeklyDurationChart() {
+        var selectedChartType = document.getElementById('id_week_dutation_chart_type').value;  // Get the selected chart type
+        
         var formData = $('#weeklyDurationForm').serialize();
         var url = "{% url 'weekly_duration' %}?" + formData;
 
@@ -39,7 +47,7 @@
                 var chartData = data.chart_data;
                 var options = {
                     chart: {
-                        type: 'line'
+                        type: selectedChartType  // Use the selected chart type
                     },
                     series: chartData.series,
                     xaxis: {

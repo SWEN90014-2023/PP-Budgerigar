@@ -8,6 +8,13 @@
 <form id="weeklyUnlockForm" method="GET" action="{% url 'weekly_unlock' %}">
     <input type="hidden" name="device_id" value="{{ request.GET.device_id }}">
     Week Start Date: <select id="id_week_start_date" name="week_start_date"></select>
+    Chart Type:
+    <select id="id_week_unlock_chart_type" name="chart_type">
+        <option value="line">Line</option>
+        <option value="bar">Bar</option>
+        <option value="area">area</option>
+        <!-- Add other chart types as per your requirement -->
+    </select>
     <input type="submit" value="Show Chart" onclick="loadWeeklyUnlockChart(); return false;">
 </form>
 
@@ -31,6 +38,8 @@
     }
 
     function loadWeeklyUnlockChart() {
+        var selectedChartType = document.getElementById('id_week_unlock_chart_type').value;  // Get the selected chart type
+        
         var formData = $('#weeklyUnlockForm').serialize();
         var url = "{% url 'weekly_unlock' %}?" + formData;
 
@@ -39,7 +48,7 @@
                 var chartData = data.chart_data;
                 var options = {
                     chart: {
-                        type: 'line'
+                        type: selectedChartType
                     },
                     series: chartData.series,
                     xaxis: {
