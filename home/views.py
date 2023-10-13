@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponse
 from admin_volt_pro.forms import RegistrationForm, LoginForm, UserPasswordResetForm, UserPasswordChangeForm, UserSetPasswordForm
 from django.contrib.auth.views import LoginView, PasswordResetView, PasswordChangeView, PasswordResetConfirmView
@@ -14,6 +14,7 @@ from .models import DailyDuration, DailyUnlock, WeeklyDuration, WeeklyUnlock
 from .forms import DateForm, WeekForm, get_available_dates, get_available_weeks
 from datetime import datetime
 import json
+from .forms import PatientForm
 
 # Create your views here.
 
@@ -88,10 +89,19 @@ def save_patient(request):
         
     return redirect('home_page')
 
-def view_patient(request):
-    patient_id = request.GET.get('patientId')
-    patient = PatientInfo.objects.get(pa_id=patient_id)
-    return render(request, 'homepage/viewPatient.html', {'patient': patient})
+
+def view_patient(request, patient_id):
+    patient = get_object_or_404(PatientInfo, pa_id=patient_id)
+    
+    if request.method == "POST":
+        form = PatientForm(request.POST, instance=patient)
+        if form.is_valid():
+            form.save()
+            return redirect('view_patient', patient_id=patient.pa_id)
+    else:
+        form = PatientForm(instance=patient)
+    
+    return render(request, 'homepage/viewPatient.html', {'patient': patient, 'form': form})
 
 
 def delete_patient(request, pa_id):
