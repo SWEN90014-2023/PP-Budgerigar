@@ -82,7 +82,7 @@ The project's directory structure is as follows:
    |-- README_deploy.md                    # Deployment instructions
    |-- render.yaml                         # Render configurations
    |-- requirements.txt                    # Python dependencies
-
+   |********************************************************************
 
 ## Database Structure
 
