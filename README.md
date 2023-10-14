@@ -83,6 +83,7 @@ The project's directory structure is as follows:
    |-- render.yaml                         # Render configurations
    |-- requirements.txt                    # Python dependencies
    |********************************************************************
+```
 
 ## Database Structure
 
