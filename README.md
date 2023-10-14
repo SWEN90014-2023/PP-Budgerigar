@@ -18,48 +18,67 @@ The project's directory structure is as follows:
 ```plaintext
 < PROJECT ROOT >
    |
-   |-- core/                               # Implements app configuration
-   |    |-- settings.py                    # Defines Global Settings
-   |    |-- wsgi.py                        # Start the app in production
-   |    |-- urls.py                        # Define URLs served by all apps/nodes
+   |-- clinic/                             # App handling clinic functionalities
+   |    |-- migrations/                    # Database migration scripts
+   |    |-- template/                      # Templates for the clinic app
+   |    |-- __pycache__/                   # Compiled Python files
+   |    |-- admin.py                       # Admin configurations
+   |    |-- apps.py                        # App configurations
+   |    |-- models.py                      # Database models
+   |    |-- tests.py                       # Testing scripts
+   |    |-- urls.py                        # URL definitions
+   |    |-- views.py                       # Logic for handling requests/responses
    |
-   |-- apps/
-   |    |
-   |    |-- home/                          # A simple app that serves HTML files
-   |    |    |-- views.py                  # Serve HTML pages for authenticated users
-   |    |    |-- urls.py                   # Define some super simple routes  
-   |    |
-   |    |-- authentication/                # Handles auth routes (login and register)
-   |    |    |-- urls.py                   # Define authentication routes  
-   |    |    |-- views.py                  # Handles login and registration  
-   |    |    |-- forms.py                  # Define auth forms (login and register) 
-   |    |
-   |    |-- static/
-   |    |    |-- <css, JS, images>         # CSS files, Javascript files
-   |    |
-   |    |-- templates/                     # Templates used to render pages
-   |         |-- includes/                 # HTML chunks and components
-   |         |    |-- navigation.html      # Top menu component
-   |         |    |-- sidebar.html         # Sidebar component
-   |         |    |-- footer.html          # App Footer
-   |         |    |-- scripts.html         # Scripts common to all pages
-   |         |
-   |         |-- layouts/                   # Master pages
-   |         |    |-- base-fullscreen.html  # Used by Authentication pages
-   |         |    |-- base.html             # Used by common pages
-   |         |
-   |         |-- accounts/                  # Authentication pages
-   |         |    |-- login.html            # Login page
-   |         |    |-- register.html         # Register page
-   |         |
-   |         |-- home/                      # UI Kit Pages
-   |              |-- index.html            # Index page
-   |              |-- 404-page.html         # 404 page
-   |              |-- *.html                # All other pages
+   |-- core/                               # Core functionalities
+   |    |-- __pycache__/                   # Compiled Python files
+   |    |-- asgi.py                        # Entry point for ASGI
+   |    |-- settings.py                    # Global settings
+   |    |-- urls.py                        # URL definitions
+   |    |-- wsgi.py                        # Entry point for WSGI
    |
-   |-- requirements.txt                     # Development modules - SQLite storage
+   |-- db/                                 # Database related directory
    |
-   |-- .env                                 # Inject Configuration via Environment
-   |-- manage.py                            # Start the app - Django default start script
+   |-- home/                               # Home app
+   |    |-- migrations/                    # Database migration scripts
+   |    |-- templates/                     # Templates for the home app
+   |    |    |-- chartView/                # Chart view templates
+   |    |    |    |-- dailyDuration.html   # Daily duration chart
+   |    |    |    |-- dailyUnlock.html     # Daily unlock chart
+   |    |    |    |-- index.html           # Index page for chart view
+   |    |    |    |-- weeklyDuration.html  # Weekly duration chart
+   |    |    |    |-- weeklyUnlock.html    # Weekly unlock chart
+   |    |    |-- homepage/                 # Homepage templates
+   |    |    |    |-- addPatient.html      # Add patient page
+   |    |    |    |-- chart.html           # Chart page
+   |    |    |    |-- client_table.html    # Client table page
+   |    |    |    |-- index.html           # Homepage index
+   |    |    |    |-- viewPatient.html     # View patient page
+   |    |-- __pycache__/                   # Compiled Python files
+   |    |-- admin.py                       # Admin configurations
+   |    |-- apps.py                        # App configurations
+   |    |-- forms.py                       # Forms definitions
+   |    |-- models.py                      # Database models
+   |    |-- tests.py                       # Testing scripts
+   |    |-- urls.py                        # URL definitions
+   |    |-- views.py                       # Logic for handling requests/responses
    |
+   |-- nginx/                              # Nginx configurations and related files
+   |-- static/                             # Static files (CSS, JS, images, etc.)
+   |
+   |-- .env                                # Environment variables
+   |-- .gitignore                          # Git ignore configurations
+   |-- admin_volt_pro.rar                  # Archived file
+   |-- build.sh                            # Shell script for building
+   |-- CHANGELOG.md                        # Changelog file
+   |-- db.sqlite3                          # SQLite3 database
+   |-- docker-compose.yml                  # Docker compose configurations
+   |-- Dockerfile                          # Docker configurations
+   |-- env.sample                          # Environment sample file
+   |-- gunicorn-cfg.py                     # Gunicorn configurations
+   |-- LICENSE.md                          # License information
+   |-- manage.py                           # Django manage script
+   |-- README.md                           # This README file
+   |-- README_deploy.md                    # Deployment instructions
+   |-- render.yaml                         # Render configurations
+   |-- requirements.txt                    # Python dependencies
    |-- ************************************************************************
