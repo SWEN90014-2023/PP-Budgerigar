@@ -82,12 +82,12 @@ The project's directory structure is as follows:
    |-- README_deploy.md                    # Deployment instructions
    |-- render.yaml                         # Render configurations
    |-- requirements.txt                    # Python dependencies
-   |********************************************************************
 ```
 
 ## Database Structure
 
 The project's database structure is as follows:
+### clinicInfo Table
 **Purpose**: Stores information about clinicians (medical users).
 - **doc_id** (Primary Key): Unique identifier for clinicians.
 - **username**: Clinician's username for login.
@@ -95,7 +95,7 @@ The project's database structure is as follows:
 - **name**: Clinician's name.
 - **phone**: Clinician's phone number (optional).
 
-## patientInfo Table
+### patientInfo Table
 **Purpose**: Stores information about patients, including their associated clinician.
 - **pa_id** (Primary Key): Unique identifier for patients.
 - **doc_id** (Foreign Key): Relates to the clinician (clinicianInfo table) ID.
@@ -106,35 +106,35 @@ The project's database structure is as follows:
 - **info**: Additional patient information, can be stored using a text field.
 - **create_time**: Timestamp of record creation.
 
-## screen Table
+### screen Table
 **Purpose**: Stores raw screen usage data.
 - **_id** (Primary Key): Unique identifier for data entries.
 - **timestamp**: Timestamp, records the time of data.
 - **device_id**: Unique identifier for devices.
 - **screen_status**: Screen status (e.g., on or off).
 
-## daily_unlock Table
+### daily_unlock Table
 **Purpose**: Records the number of device unlocks on a daily basis categorized by specific time intervals.
 - **id** (Primary Key): Auto-incremented identifier for entries.
 - **date**: The date of record.
 - **device_id**: Identifier for devices.
 - Hourly categorized unlocks (e.g., `0_2_unlocks`): Count of unlocks.
 
-## daily_durations Table
+### daily_durations Table
 **Purpose**: Records the total duration of device usage on a daily basis categorized by specific time intervals.
 - **id** (Primary Key): Auto-incremented identifier for entries.
 - **date**: The date of record.
 - **device_id**: Identifier for devices.
 - Hourly categorized durations (e.g., `0_2_duration`): Duration of usage in hours/minutes.
 
-## weekly_unlocks Table
+### weekly_unlocks Table
 **Purpose**: Records the number of device unlocks on a weekly basis categorized by weekdays.
 - **id** (Primary Key): Auto-incremented identifier for entries.
 - **week_start**: The starting date of the week.
 - **device_id**: Identifier for devices.
 - Weekday categorized unlocks (e.g., `Monday`, `Tuesday`): Count of unlocks.
 
-## weekly_durations Table
+### weekly_durations Table
 **Purpose**: Records the total duration of device usage on a weekly basis categorized by weekdays.
 - **id** (Primary Key): Auto-incremented identifier for entries.
 - **week_start**: The starting date of the week.
