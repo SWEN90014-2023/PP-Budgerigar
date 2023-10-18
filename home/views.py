@@ -232,13 +232,13 @@ def weekly_unlock(request):
                 'series': [{
                     'name': 'Unlocks',
                     'data': [
-                        weekly_unlock.Monday,
-                        weekly_unlock.Tuesday,
-                        weekly_unlock.Wednesday,
-                        weekly_unlock.Thursday,
-                        weekly_unlock.Friday,
-                        weekly_unlock.Saturday,
-                        weekly_unlock.Sunday
+                        weekly_unlock.Monday if weekly_unlock.Monday is not None else 0,
+                        weekly_unlock.Tuesday if weekly_unlock.Tuesday is not None else 0,
+                        weekly_unlock.Wednesday if weekly_unlock.Wednesday is not None else 0,
+                        weekly_unlock.Thursday if weekly_unlock.Thursday is not None else 0,
+                        weekly_unlock.Friday if weekly_unlock.Friday is not None else 0,
+                        weekly_unlock.Saturday if weekly_unlock.Saturday is not None else 0,
+                        weekly_unlock.Sunday if weekly_unlock.Sunday is not None else 0
                     ]
                 }]
             }
@@ -268,13 +268,13 @@ def weekly_duration(request):
                 'series': [{
                     'name': 'Screen Time',
                     'data': [
-                        int(weekly_duration.Monday / 60),
-                        int(weekly_duration.Tuesday / 60),
-                        int(weekly_duration.Wednesday / 60),
-                        int(weekly_duration.Thursday / 60),
-                        int(weekly_duration.Friday / 60),
-                        int(weekly_duration.Saturday / 60),
-                        int(weekly_duration.Sunday / 60)
+                        int((weekly_duration.Monday if weekly_duration.Monday is not None else 0) / 60),
+                        int((weekly_duration.Tuesday if weekly_duration.Tuesday is not None else 0) / 60),
+                        int((weekly_duration.Wednesday if weekly_duration.Wednesday is not None else 0) / 60),
+                        int((weekly_duration.Thursday if weekly_duration.Thursday is not None else 0) / 60),
+                        int((weekly_duration.Friday if weekly_duration.Friday is not None else 0) / 60),
+                        int((weekly_duration.Saturday if weekly_duration.Saturday is not None else 0) / 60),
+                        int((weekly_duration.Sunday if weekly_duration.Sunday is not None else 0) / 60)
                     ]
                 }]
             }

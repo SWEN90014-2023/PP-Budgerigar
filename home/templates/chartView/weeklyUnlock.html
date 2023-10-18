@@ -7,16 +7,17 @@
 
 <form id="weeklyUnlockForm" method="GET" action="{% url 'weekly_unlock' %}">
     <input type="hidden" name="device_id" value="{{ request.GET.device_id }}">
-    Week Start Date: <select id="id_week_start_date" name="week_start_date"></select>
+    Week Start Date: 
+    <select class="form-control" id="id_week_start_date" name="week_start_date" style="display: inline-block; width: auto;"></select>
     Chart Type:
-    <select id="id_week_unlock_chart_type" name="chart_type">
+    <select class="form-control" id="id_week_unlock_chart_type" name="chart_type" style="display: inline-block; width: auto;">
         <option value="line">Line</option>
         <option value="bar">Bar</option>
         <option value="area">Area</option>
-        <!-- Add other chart types as per your requirement -->
     </select>
-    <input type="submit" value="Show Chart" onclick="loadWeeklyUnlockChart(); return false;">
+    <input type="button" class="btn btn-primary" value="Show Chart" onclick="loadWeeklyUnlockChart(); return false;">
 </form>
+
 
 <div id="weeklyUnlockChart"></div>
 
@@ -52,7 +53,15 @@
                     },
                     series: chartData.series,
                     xaxis: {
-                        categories: chartData.categories
+                        categories: chartData.categories,
+                        title: {
+                            text: 'Time Range'
+                        }
+                    },
+                    yaxis: {
+                        title: {
+                            text: 'Unlock'
+                        }
                     }
                 }
                 var chart = new ApexCharts(document.querySelector("#weeklyUnlockChart"), options);

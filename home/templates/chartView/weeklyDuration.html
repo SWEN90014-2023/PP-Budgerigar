@@ -7,14 +7,15 @@
 
 <form id="weeklyDurationForm" method="GET" action="{% url 'weekly_duration' %}">
     <input type="hidden" name="device_id" value="{{ request.GET.device_id }}">
-    Week Start Date: <select id="id_week_duration" name="week_start_date"></select>
+    Week Start Date: 
+    <select class="form-control" id="id_week_duration" name="week_start_date" style="display: inline-block; width: auto;"></select>
     Chart Type:
-    <select id="id_week_dutation_chart_type" name="chart_type">
+    <select class="form-control" id="id_week_dutation_chart_type" name="chart_type" style="display: inline-block; width: auto;">
         <option value="line">Line</option>
         <option value="bar">Bar</option>
         <option value="area">Area</option>
     </select>
-    <input type="submit" value="Show Chart" onclick="loadWeeklyDurationChart(); return false;">
+    <input type="button" class="btn btn-gray-800" value="Show Chart" onclick="loadWeeklyDurationChart(); return false;">
 </form>
 
 <div id="weeklyDurationChart"></div>
@@ -47,11 +48,19 @@
                 var chartData = data.chart_data;
                 var options = {
                     chart: {
-                        type: selectedChartType  // Use the selected chart type
+                        type: selectedChartType
                     },
                     series: chartData.series,
                     xaxis: {
-                        categories: chartData.categories
+                        categories: chartData.categories,
+                        title: {
+                            text: 'Time Range'
+                        }
+                    },
+                    yaxis: {
+                        title: {
+                            text: 'Duration'
+                        }
                     }
                 }
                 var chart = new ApexCharts(document.querySelector("#weeklyDurationChart"), options);

@@ -7,17 +7,18 @@
 
 <form id="chartForm" method="GET" action="{% url 'daily_unlock' %}">
     <input type="hidden" name="device_id" value="{{ request.GET.device_id }}">
-    Date: <select id="id_date" name="date"></select>
+    Date: 
+    <select class="form-control" id="id_date" name="date" style="display: inline-block; width: auto;"></select>
     Chart Type:
-    <select id="id_daily_unlock_chart_type" name="chart_type">
+    <select class="form-control" id="id_daily_unlock_chart_type" name="chart_type" style="display: inline-block; width: auto;">
         <option value="line">Line</option>
         <option value="bar">Bar</option>
-        <option value="area">Area</option>
-        <!-- Add other chart types as per your requirement -->
+        <option value="Area">Area</option>
     </select>
-    <input type="submit" value="Show Chart" onclick="loadChart(); return false;">
+    <input type="button" class="btn btn-gray-800 mt-2" value="Show Chart" onclick="loadChart(); return false;">
 </form>
 
+<div id="chart" class="mt-4"></div>
 <div id="chart"></div>
 
 <script>
@@ -46,14 +47,22 @@
 
         $.get(url, function(data) {
             if (data.chart_data) {
-                var chartData = data.chart_data;  // 直接使用 data.chart_data
+                var chartData = data.chart_data;
                 var options = {
                     chart: {
-                        type: selectedChartType  // Use the selected chart type
+                        type: selectedChartType
                     },
                     series: chartData.series,
                     xaxis: {
-                        categories: chartData.categories
+                        categories: ['00:00-02:00', '03:00-05:00', '06:00-08:00', '09:00-11:00', '12:00-14:00', '15:00-17:00', '18:00-20:00', '21:00-23:00'],
+                        title: {
+                            text: 'Time Range'
+                        }
+                    },
+                    yaxis: {
+                        title: {
+                            text: 'Unlock Times'
+                        }
                     }
                 }
                 var chart = new ApexCharts(document.querySelector("#chart"), options);

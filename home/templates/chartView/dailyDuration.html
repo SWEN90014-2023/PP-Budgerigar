@@ -7,14 +7,15 @@
 
 <form id="durationForm" method="GET" action="{% url 'daily_duration' %}">
     <input type="hidden" name="device_id" value="{{ request.GET.device_id }}">
-    Date: <select id="duration_date" name="date"></select>
+    Date: 
+    <select class="form-control" id="duration_date" name="date" style="display: inline-block; width: auto;"></select>
     Chart Type:
-    <select id="id_daily_duration_chart_type" name="chart_type">
+    <select class="form-control" id="id_daily_duration_chart_type" name="chart_type" style="display: inline-block; width: auto;">
         <option value="line">Line</option>
         <option value="bar">Bar</option>
         <option value="area">Area</option>
     </select>
-    <input type="submit" value="Show Chart" onclick="loadDurationChart(); return false;">
+    <input type="button" class="btn btn-gray-800" value="Show Chart" onclick="loadDurationChart(); return false;">
 </form>
 
 <div id="durationChart"></div>
@@ -50,7 +51,15 @@
                     },
                     series: chartData.series,
                     xaxis: {
-                        categories: chartData.categories
+                        categories: ['00:00-02:00', '03:00-05:00', '06:00-08:00', '09:00-11:00', '12:00-14:00', '15:00-17:00', '18:00-20', '21:00-23:00'],
+                        title: {
+                            text: 'Time Range'
+                        }
+                    },
+                    yaxis: {
+                        title: {
+                            text: 'Duration'
+                        }
                     }
                 }
                 var chart = new ApexCharts(document.querySelector("#durationChart"), options);
