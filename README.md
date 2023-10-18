@@ -201,19 +201,13 @@ Follow these instructions to deploy the project:
    - **Modify the parameters within the `.env` file:**
    
      ```plaintext
-     DB_ENGINE="mysql"
-     DB_NAME=""
-     DB_USERNAME=""
-     DB_PASS=""
-     DB_HOST=localhost
-     DB_PORT=3306
-     
-     # Use MySQL as the database
-     # Enter the using MySQL database name inside the ""
-     # Enter the MySQL username inside the ""
-     # Enter the MySQL password inside the ""
-     # Use default localhost or use a specific host
-     # Default port
+     DB_ENGINE="mysql" # Use MySQL as the database
+     DB_NAME=""        # Enter the using MySQL database name inside the ""
+     DB_USERNAME=""    # Enter the MySQL username inside the ""
+     DB_PASS=""        # Enter the MySQL password inside the ""
+     DB_HOST=localhost # Use default localhost or use a specific host
+     DB_PORT=3306      # Default port
+   
      ```
 
 ## 7. **Make Migrations for Database Models**
