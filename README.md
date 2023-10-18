@@ -9,7 +9,7 @@ This project aims to assist clinicians in analyzing their patients more effectiv
    
 - [Project Structure](#project-structure)
 - [Database Structure](#database-structure)
-- [Deployment Steps](#Deployment Steps)
+- [Deployment Steps](#Deployment-Steps)
 
 </details>
 
