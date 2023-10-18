@@ -9,6 +9,7 @@ This project aims to assist clinicians in analyzing their patients more effectiv
    
 - [Project Structure](#project-structure)
 - [Database Structure](#database-structure)
+- [Deployment Steps](#deployment-steps)
 
 </details>
 
@@ -141,3 +142,89 @@ The project's database structure is as follows:
 - **device_id**: Identifier for devices.
 - Weekday categorized durations (e.g., `Monday`, `Tuesday`): Duration of usage in hours/minutes.
 
+# Deployment Steps
+
+Follow these instructions to deploy the project:
+
+## 1. **Create Virtual Environment on the Server**
+
+   Navigate to the project directory:
+   ```bash
+   Project> virtualenv env
+   ```
+
+## 2. **Enter Virtual Environment**
+
+   ```bash
+   Project> source env/bin/activate
+   ```
+
+## 3. **Installing Project Dependencies**
+
+   ```bash
+   (env) Project> pip install -r requirements.txt
+   ```
+
+## 4. **Installing Database Client**
+
+   ```bash
+   (env) Project> pip install mysqlclient
+   ```
+
+## 5. **Set Up Database and Import Data**
+
+   Enter the MySQL interface:
+   ```bash
+   user> mysql -u Username -p
+   ```
+   
+   Execute the following commands:
+   ```sql
+   mysql> use mydb; #mydb should be the name of database
+   mysql> source @@Your Path\PP-Budgerigar\db\screen_data.sql
+   mysql> source @@Your Path\PP-Budgerigar\db\screen_chart.sql
+   ```
+
+## 6. **Connect the Project and Local Database**
+
+   - **Modify the `.env` file located in the project root directory:**
+
+     ```plaintext
+     < PROJECT ROOT >
+        |-- .env
+     ```
+     Use a command-line text editor (nano, vim, or gedit). Here, nano is used as an example:
+     ```bash
+     (env) Project> nano .env
+     ```
+
+   - **Modify the parameters within the `.env` file:**
+   
+     ```plaintext
+     DB_ENGINE="mysql" # Use MySQL as the database
+     DB_NAME=""        # Enter the using MySQL database name inside the ""
+     DB_USERNAME=""    # Enter the MySQL username inside the ""
+     DB_PASS=""        # Enter the MySQL password inside the ""
+     DB_HOST=localhost # Use default localhost or use a specific host
+     DB_PORT=3306      # Default port
+   
+     ```
+
+## 7. **Make Migrations for Database Models**
+
+   ```bash
+   (env) Project> python manage.py makemigrations
+   (env) Project> python manage.py migrate
+   ```
+
+## 8. **Create an Admin Account**
+
+   ```bash
+   (env) Project> python manage.py createsuperuser
+   ```
+
+## 9. **Run the Server**
+
+   ```bash
+   (env) Project> python manage.py runserver
+   ```
