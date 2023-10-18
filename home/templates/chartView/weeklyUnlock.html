@@ -11,15 +11,14 @@
     <select class="form-control" id="id_week_start_date" name="week_start_date" style="display: inline-block; width: auto;"></select>
     Chart Type:
     <select class="form-control" id="id_week_unlock_chart_type" name="chart_type" style="display: inline-block; width: auto;">
+        <option value="area">Area</option>
         <option value="line">Line</option>
         <option value="bar">Bar</option>
-        <option value="area">Area</option>
     </select>
     <input type="button" class="btn btn-primary" value="Show Chart" onclick="loadWeeklyUnlockChart(); return false;">
 </form>
 
-
-<div id="weeklyUnlockChart"></div>
+<div id="weeklyUnlockChart" class="mt-4"></div>
 
 <script>
     function loadWeeklyUnlockDates() {

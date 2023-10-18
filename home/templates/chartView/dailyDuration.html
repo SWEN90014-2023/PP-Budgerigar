@@ -11,14 +11,14 @@
     <select class="form-control" id="duration_date" name="date" style="display: inline-block; width: auto;"></select>
     Chart Type:
     <select class="form-control" id="id_daily_duration_chart_type" name="chart_type" style="display: inline-block; width: auto;">
+        <option value="area">Area</option>
         <option value="line">Line</option>
         <option value="bar">Bar</option>
-        <option value="area">Area</option>
     </select>
     <input type="button" class="btn btn-gray-800" value="Show Chart" onclick="loadDurationChart(); return false;">
 </form>
 
-<div id="durationChart"></div>
+<div id="durationChart" class="mt-4"></div>
 
 <script>
     function loadDurationDates() {
@@ -58,7 +58,7 @@
                     },
                     yaxis: {
                         title: {
-                            text: 'Duration'
+                            text: 'Duration Minutes'
                         }
                     }
                 }

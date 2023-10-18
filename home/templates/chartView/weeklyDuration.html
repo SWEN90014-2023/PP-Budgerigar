@@ -11,14 +11,14 @@
     <select class="form-control" id="id_week_duration" name="week_start_date" style="display: inline-block; width: auto;"></select>
     Chart Type:
     <select class="form-control" id="id_week_dutation_chart_type" name="chart_type" style="display: inline-block; width: auto;">
+        <option value="area">Area</option>
         <option value="line">Line</option>
         <option value="bar">Bar</option>
-        <option value="area">Area</option>
     </select>
     <input type="button" class="btn btn-gray-800" value="Show Chart" onclick="loadWeeklyDurationChart(); return false;">
 </form>
 
-<div id="weeklyDurationChart"></div>
+<div id="weeklyDurationChart" class="mt-4"></div>
 
 <script>
     function loadWeeklyDurationDates() {
@@ -59,7 +59,7 @@
                     },
                     yaxis: {
                         title: {
-                            text: 'Duration'
+                            text: 'Duration Minutes'
                         }
                     }
                 }
