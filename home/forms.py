@@ -1,6 +1,8 @@
 from django import forms
 from django.db import connection
 
+from clinic.models import PatientInfo
+
 class DateForm(forms.Form):
     def __init__(self, *args, device_id=None, **kwargs):
         super().__init__(*args, **kwargs)
@@ -28,3 +30,9 @@ def get_available_weeks(device_id):
         cursor.execute("SELECT week_start FROM weekly_unlocks WHERE device_id = %s", [device_id])
         rows = cursor.fetchall()
     return [row[0] for row in rows]
+
+class PatientForm(forms.ModelForm):
+    class Meta:
+        model = PatientInfo
+        fields = ['pa_name', 'age', 'sex', 'info', 'device_id']
+        

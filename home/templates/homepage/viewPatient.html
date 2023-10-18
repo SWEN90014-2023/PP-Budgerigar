@@ -7,37 +7,44 @@
     <div class="col-12 col-xl-6">
       <div class="card card-body border-0 shadow mb-4">
         <h2 class="h5 mb-4">Patient Information</h2>
-        <form>
+        <form method="post" action="{% url 'view_patient' patient_id=patient.pa_id %}">
+          {% csrf_token %}
           <div class="row">
             <div class="col-md-6 mb-3">
-              <label for="pa_name">Patient Name</label>
-              <input class="form-control" id="pa_name" type="text" value="{{ patient.pa_name }}" readonly>
+              <label for="{{ form.pa_name.id_for_label }}">Patient Name</label>
+              <input type="text" name="{{ form.pa_name.name }}" id="{{ form.pa_name.id_for_label }}" value="{{ form.pa_name.value|default:'' }}" class="form-control">
+              {{ form.pa_name.errors }}
             </div>
             <div class="col-md-6 mb-3">
-              <label for="age">Age</label>
-              <input class="form-control" id="age" type="text" value="{{ patient.age }}" readonly>
+              <label for="{{ form.age.id_for_label }}">Age</label>
+              <input type="text" name="{{ form.age.name }}" id="{{ form.age.id_for_label }}" value="{{ form.age.value|default:'' }}" class="form-control">
+              {{ form.age.errors }}
             </div>
           </div>
           <div class="row">
             <div class="col-md-6 mb-3">
-              <label for="sex">Gender</label>
-              <input class="form-control" id="sex" type="text" value="{{ patient.sex }}" readonly>
+              <label for="{{ form.sex.id_for_label }}">Gender</label>
+              <input type="text" name="{{ form.sex.name }}" id="{{ form.sex.id_for_label }}" value="{{ form.sex.value|default:'' }}" class="form-control">
+              {{ form.sex.errors }}
             </div>
             <div class="col-md-6 mb-3">
-              <label for="info">Info</label>
-              <textarea class="form-control" id="info" rows="3" readonly>{{ patient.info }}</textarea>
+              <label for="{{ form.info.id_for_label }}">Info</label>
+              <textarea name="{{ form.info.name }}" id="{{ form.info.id_for_label }}" rows="3" class="form-control">{{ form.info.value|default:'' }}</textarea>
+              {{ form.info.errors }}
             </div>
           </div>
           <div class="row">
             <div class="col-md-6 mb-3">
-              <label for="device_id">Device ID</label>
-              <input class="form-control" id="device_id" type="text" value="{{ patient.device_id }}" readonly>
+              <label for="{{ form.device_id.id_for_label }}">Device ID</label>
+              <input type="text" name="{{ form.device_id.name }}" id="{{ form.device_id.id_for_label }}" value="{{ form.device_id.value|default:'' }}" class="form-control">
+              {{ form.device_id.errors }}
             </div>
             <div class="col-md-6 mb-3">
-              <label for="create_time">Creation Time</label>
-              <input class="form-control" id="create_time" type="text" value="{{ patient.create_time }}" readonly>
+                <label for="create_time">Creation Time</label>
+                <input type="text" id="create_time" value="{{ patient.create_time }}" class="form-control" readonly>                
             </div>
           </div>
+          <button type="submit" class="btn btn-primary">Save changes</button>
         </form>
       </div>
     </div>
