@@ -116,7 +116,7 @@ def delete_patient(request, pa_id):
    
 def get_patient_by_name(request, clinician_id, name):
     # get patients
-    matching_patients = PatientInfo.objects.filter(pa_name__icontains=name, cli_id=clinician_id)
+    matching_patients = PatientInfo.objects.filter(pa_name__icontains=name)
     
     patients_list = list(matching_patients.values())
 
@@ -177,7 +177,6 @@ def daily_unlock(request):
         'form_errors': form_errors,
         'chart_data': chart_data if chart_data else None,
     }
-    print(response_data)
     return JsonResponse(response_data)
 
 def daily_duration(request):
