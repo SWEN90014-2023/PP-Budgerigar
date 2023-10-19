@@ -144,7 +144,6 @@ def get_week(request):
 def daily_unlock(request):
     chart_data = None
     device_id = request.GET.get('device_id')
-    print(device_id)
     form = DateForm(request.GET or None, device_id=device_id)
     form_errors = {}
     if form.is_valid():
