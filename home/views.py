@@ -177,7 +177,6 @@ def daily_unlock(request):
         'form_errors': form_errors,
         'chart_data': chart_data if chart_data else None,
     }
-    print(response_data)
     return JsonResponse(response_data)
 
 def daily_duration(request):
